@@ -1,0 +1,4 @@
+[2023-12-20 16:45:35,412][S3_Train_Process.py] start training!
+[2023-12-20 16:45:49,249][S3_Train_Process.py] Epoch:[0/2]  lr=0.000100  loss=0.38171  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 16:46:02,211][S3_Train_Process.py] Epoch:[1/2]  lr=0.000100  loss=0.33287  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 16:46:02,211][S3_Train_Process.py] finish training!

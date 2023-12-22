@@ -1,0 +1,22 @@
+[2023-12-20 15:06:19,935][S3_Train_Process.py] start training!
+[2023-12-20 15:06:41,056][S3_Train_Process.py] Epoch:[0/20]  lr=0.000100  loss=0.29940  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:07:01,186][S3_Train_Process.py] Epoch:[1/20]  lr=0.000100  loss=0.25888  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:07:21,356][S3_Train_Process.py] Epoch:[2/20]  lr=0.000100  loss=0.25952  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:07:41,471][S3_Train_Process.py] Epoch:[3/20]  lr=0.000100  loss=0.24983  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:08:01,623][S3_Train_Process.py] Epoch:[4/20]  lr=0.000100  loss=0.24748  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:08:21,711][S3_Train_Process.py] Epoch:[5/20]  lr=0.000100  loss=0.23410  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:08:41,866][S3_Train_Process.py] Epoch:[6/20]  lr=0.000100  loss=0.23911  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:09:02,018][S3_Train_Process.py] Epoch:[7/20]  lr=0.000100  loss=0.23456  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:09:22,197][S3_Train_Process.py] Epoch:[8/20]  lr=0.000100  loss=0.23679  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:09:42,297][S3_Train_Process.py] Epoch:[9/20]  lr=0.000100  loss=0.23279  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:10:02,418][S3_Train_Process.py] Epoch:[10/20]  lr=0.000100  loss=0.22618  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:10:22,568][S3_Train_Process.py] Epoch:[11/20]  lr=0.000100  loss=0.21433  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:10:42,671][S3_Train_Process.py] Epoch:[12/20]  lr=0.000100  loss=0.20038  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:11:02,820][S3_Train_Process.py] Epoch:[13/20]  lr=0.000100  loss=0.21980  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:11:22,937][S3_Train_Process.py] Epoch:[14/20]  lr=0.000100  loss=0.18667  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:11:43,060][S3_Train_Process.py] Epoch:[15/20]  lr=0.000100  loss=0.19802  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:12:03,147][S3_Train_Process.py] Epoch:[16/20]  lr=0.000100  loss=0.19254  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:12:23,280][S3_Train_Process.py] Epoch:[17/20]  lr=0.000100  loss=0.17459  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:12:43,403][S3_Train_Process.py] Epoch:[18/20]  lr=0.000100  loss=0.20095  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:13:03,534][S3_Train_Process.py] Epoch:[19/20]  lr=0.000100  loss=0.19951  dice_mean=0.0000 max_dice=0.0000
+[2023-12-20 15:13:03,535][S3_Train_Process.py] finish training!

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+import os
 import torch
 from torch.utils import data
 import numpy as np
 import SimpleITK as sitk
 from S3_Data_Augumentation import transform_img_lab
+import tifffile
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -12,9 +14,19 @@ warnings.filterwarnings("ignore")
 def read_file_from_txt(txt_path):
     files = []
     for line in open(txt_path, "r"):
-        files.append(line.strip())
+        filepath = line.strip()
+        if not filepath.endswith('.tif') and not filepath.endswith('.tiff'):
+            # 跳过非图片文件
+            continue
+        if not os.path.isfile(filepath):
+            # 尝试替换后缀
+            filepath = filepath.replace('.tif', '.tiff') if filepath.endswith('.tif') else filepath.replace('.tiff', '.tif')
+        if os.path.isfile(filepath):
+            files.append(filepath)
+        else:
+            # 如果文件仍然不存在，打印警告信息
+            print(f"Warning: 文件 {filepath} 不存在。")
     return files
-
 
 class Dataloader(data.Dataset):
     def __init__(self, args):
@@ -25,19 +37,23 @@ class Dataloader(data.Dataset):
         self.args = args
 
     def __getitem__(self, index):
-        image_path = self.image_file[index]
-        label_path = self.label_file[index]
+        
+        # 用来读取tiff文件
+        image = tifffile.imread(self.image_file[index])
+        label = tifffile.imread(self.label_file[index])
 
-        # Read images and labels
-        image = sitk.ReadImage(image_path)
-        image = sitk.GetArrayFromImage(image)
-        label = sitk.ReadImage(label_path)
-        label = sitk.GetArrayFromImage(label)
+        # 确保图像是三维的，如果是二维图像，那么我们需要添加一个额外的维度
+        if image.ndim == 2:
+            image = image[:, :, np.newaxis]
 
+        # 如果图像有多于1个通道，那么将其转换为灰度图
+        if image.shape[2] > 1:
+            # 这里是将RGB转换为灰度图的标准方法，您可以根据需要调整权重
+            image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
+            image = image.astype(np.float32)
+        
         y, x = image.shape
-        image = image.astype(dtype=np.float32)
-        label = label.astype(dtype=np.float32)
-
+        
         # Normalization
         mean, std = np.load(self.args.root_dir + self.args.Tr_Meanstd_name)
         image = (image - mean) / std

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import torch
 from torch import nn, cat
 from torch.nn.functional import dropout

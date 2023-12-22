@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 from os import listdir
 from os.path import join
 import numpy as np
@@ -22,7 +23,14 @@ def Getmeanstd(args, image_path, meanstd_name):
     root_dir = args.root_dir
     file_names = [x for x in listdir(join(image_path))]
     mean, std, length = 0.0, 0.0, 0.0
-
+    
+    for file_name in file_names:
+        full_file_path = os.path.join(image_path, file_name)
+        print("Trying to read:", full_file_path)  # 打印出完整的文件路径
+        if not os.path.exists(full_file_path):
+            raise FileNotFoundError(f"The file {full_file_path} does not exist.")
+        image = sitk.ReadImage(full_file_path)
+        
     for file_name in file_names:
         image = sitk.ReadImage(image_path + file_name)
         image = sitk.GetArrayFromImage(image).astype(np.float32)

@@ -14,7 +14,7 @@ The purpose of this code is to generate ".txt" files in */TXT/ for training and 
 def Get_file_list(file_dir):
     files = os.listdir(file_dir)
     # Sort files named with numbers (Like 1.nii.gz, 2.nii.gz)
-    files.sort(key=lambda x: int(x.split(".")[0]))
+    files.sort(key=lambda x: int(x.split(".")[0]) if x.split(".")[0].isdigit() else float('inf'))
     files_num = len(files)
     return files, files_num
 

@@ -8,6 +8,8 @@ import SimpleITK as sitk
 from datetime import datetime
 from torch.utils.data import DataLoader
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+import tifffile
+import random
 
 from S3_DSCNet import DSCNet
 from S3_Dataloader import Dataloader
@@ -144,7 +146,7 @@ def Train_net(net, args):
                 )
         logger.info("Epoch:[{}/{}]  lr={:.6f}  loss={:.5f}  dice_mean={:.4f} "
                     "max_dice={:.4f}".format(
-                        epoch,
+                        epoch+1,
                         args.n_epochs,
                         optimizer.param_groups[0]["lr"],
                         loss,
@@ -154,10 +156,21 @@ def Train_net(net, args):
     logger.info("finish training!")
 
 
-def read_file_from_txt(txt_path):  # 从txt里读取数据
+def read_file_from_txt(txt_path):
     files = []
     for line in open(txt_path, "r"):
-        files.append(line.strip())
+        filepath = line.strip()
+        if not filepath.endswith('.tif') and not filepath.endswith('.tiff'):
+            # 跳过非图片文件
+            continue
+        if not os.path.isfile(filepath):
+            # 尝试替换后缀
+            filepath = filepath.replace('.tif', '.tiff') if filepath.endswith('.tif') else filepath.replace('.tiff', '.tif')
+        if os.path.isfile(filepath):
+            files.append(filepath)
+        else:
+            # 如果文件仍然不存在，打印警告信息
+            print(f"Warning: 文件 {filepath} 不存在。")
     return files
 
 
@@ -172,19 +185,23 @@ def reshape_img(image, y, x):
 def predict(model, image_dir, save_path, args):
     print("Predict test data")
     model.eval()
-    file = read_file_from_txt(image_dir)
-    file_num = len(file)
+    all_files = read_file_from_txt(image_dir)
+    file_num = len(all_files)
+    selected_files = random.sample(all_files, int(file_num * 0.1))  # 只选取10%的文件进行预测
 
-    for t in range(file_num):
-        image_path = file[t]
-        print(image_path)
+    for image_path in selected_files:
+        print(f"Processing {image_path}")
 
-        image = sitk.ReadImage(image_path)
-        image = sitk.GetArrayFromImage(image)
+        # 使用tifffile读取tiff图像
+        image = tifffile.imread(image_path)
+
+        # 如果图像有多个通道，转换为灰度图
+        if image.ndim == 3 and image.shape[2] > 1:
+            image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
         image = image.astype(np.float32)
 
         name = image_path[image_path.rfind("/") + 1:]
-        mean, std = np.load(args.root_dir + args.Te_Meanstd_name)
+        mean, std = np.load(os.path.join(args.root_dir, args.Te_Meanstd_name))
         image = (image - mean) / std
         y, x = image.shape
 
